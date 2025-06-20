@@ -1,10 +1,22 @@
 [project]
-name = "syllables-mcp"
+name = "lyrical-mcp"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
-    "mcp[cli]>=1.9.4",
+    "mcp[cli]>=1.7.1",
     "nltk",
+    "httpx>=0.25.0",
+    "uvicorn>=0.23.1"
 ]
+
+[project.scripts]
+lyrical-mcp = "lyrical_mcp.main:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["lyrical_mcp"]
