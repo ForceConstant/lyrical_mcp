@@ -3,13 +3,9 @@ build:
   dockerfile: "Dockerfile"           # Path to your Dockerfile
   dockerBuildPath: "."               # Docker build context
 startCommand:
-  type: "http"
-  configSchema:                      # JSON Schema for configuration
-    type: "object"
-    properties:
-      apiKey:
-        type: "string"
-        description: "Your API key"
-    required: ["apiKey"]
-  exampleConfig:
-    apiKey: "sk-example123"
+  type: http
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    description: No configuration required
+  exampleConfig: {}

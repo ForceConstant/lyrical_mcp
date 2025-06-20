@@ -14,10 +14,10 @@ RUN pip install uv && uv sync
 COPY . .
 
 # Expose the port the application runs on
-EXPOSE 9000
+EXPOSE 8080
 
 # Set the PORT environment variable
-ENV PORT=9000
+ENV PORT=8080
 
 # Command to run the application
 CMD ["uv", "run", "python", "main.py"]
