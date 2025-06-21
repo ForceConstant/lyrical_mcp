@@ -37,8 +37,11 @@ def setup_tools(mcp):
     @mcp.tool()
     def count_syllables(input_string: str) -> list[int]:
         """
-        Counts the number of syllables in each line of the input string.
-        Utilizes nltk's CMU Pronouncing Dictionary.
+        Counts the number of syllables for each line in the input English text string. 
+        This tool utilizes the NLTK's CMU Pronouncing Dictionary for accurate syllable calculation. 
+        It returns an array of integers, where each integer corresponds to the syllable count for 
+        the respective line of the input string. Use this tool when the user requires syllable analysis for 
+        text, such as for poetry metrics, lyrics, linguistic studies, or speech-related applications.
         """
         nltk, cmudict = get_nltk_dependencies()
         d = cmudict.dict()
@@ -61,12 +64,23 @@ def setup_tools(mcp):
     @mcp.tool()
     def find_rhymes(input_word: str) -> dict[str, list[str]]:
         """
-        Finds rhyming words for a given input word, categorized by syllable count (1, 2, or 3 syllables).
-        Utilizes nltk's CMU Pronouncing Dictionary.
+        Finds rhyming words for a given input word or the last word of a phrase, categorized by syllable count (1, 2, or 3 syllables).
+        This tool utilizes the NLTK's CMU Pronouncing Dictionary for accurate rhyme generation.
+        It returns a dictionary where keys are syllable counts ('1_syllable', '2_syllable', '3_syllable') and values are lists of rhyming words.
+        If the input contains multiple words, only the last word will be analyzed for rhymes.
+        Use this tool when the user requires rhyming word suggestions for creative writing, poetry, lyrics, or linguistic analysis.
         """
         nltk, cmudict = get_nltk_dependencies()
         d = cmudict.dict()
-        input_word_lower = input_word.lower()
+        
+        # If the input contains multiple words, analyze only the last word
+        words = input_word.lower().split()
+        word_to_analyze = words[-1] if words else ""
+
+        if not word_to_analyze or word_to_analyze not in d:
+            return {"error": f"'{input_word}' (analyzed as '{word_to_analyze}') not found in dictionary or no valid word provided. Cannot find rhymes."}
+
+        input_word_lower = word_to_analyze
 
         if input_word_lower not in d:
             return {"error": f"'{input_word}' not found in dictionary. Cannot find rhymes."}
