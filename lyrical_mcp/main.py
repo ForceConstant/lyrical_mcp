@@ -34,14 +34,23 @@ def setup_tools(mcp):
             "tools_available": ["ping", "health_check", "count_syllables", "find_rhymes"]
         }
 
-    @mcp.tool()
-    def count_syllables(input_string: str) -> list[int]:
+    @mcp.tool(
+        annotations={
+            "title": "Count Syllables",
+            "readOnlyHint": True,
+            "openWorldHint": False
+        }
+    )
+    def count_syllables(
+            input_string: str = Field(description="Syllable count query string")
+        ) -> list[int]:
         """
         Counts the number of syllables for each line in the input English text string. 
         This tool utilizes the NLTK's CMU Pronouncing Dictionary for accurate syllable calculation. 
         It returns an array of integers, where each integer corresponds to the syllable count for 
         the respective line of the input string. Use this tool when the user requires syllable analysis for 
-        text, such as for poetry metrics, lyrics, linguistic studies, or speech-related applications.
+        text, such as for poetry metrics, lyrics, linguistic studies, or speech-related applications. If a line returns 
+        0 syllables, assume this is a blank line, and you can ignore.
         """
         nltk, cmudict = get_nltk_dependencies()
         d = cmudict.dict()
@@ -61,7 +70,13 @@ def setup_tools(mcp):
             syllable_counts.append(line_syllables)
         return syllable_counts
 
-    @mcp.tool()
+    @mcp.tool(
+        annotations={
+            "title": "Find Rhymes",
+            "readOnlyHint": True,
+            "openWorldHint": False
+        }
+    )
     def find_rhymes(input_word: str) -> dict[str, list[str]]:
         """
         Finds rhyming words for a given input word or the last word of a phrase, categorized by syllable count (1, 2, or 3 syllables).
