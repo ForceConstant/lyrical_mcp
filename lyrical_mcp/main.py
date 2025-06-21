@@ -1,6 +1,7 @@
 from typing import Dict, Any
 import os
 import re
+from pydantic import Field
 
 # Lazy loading to prevent tool scanning timeouts
 def get_mcp():
