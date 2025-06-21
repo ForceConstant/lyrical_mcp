@@ -10,5 +10,7 @@ COPY . /app
 # Install Python dependencies and the MCP server
 RUN pip install --no-cache-dir .
 
+RUN python -c "import nltk; nltk.download('cmudict'); nltk.download('punkt')"
+
 # Use the console script entrypoint
 CMD ["lyrical-mcp"]
